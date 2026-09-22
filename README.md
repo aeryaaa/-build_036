@@ -1,5 +1,3 @@
-# Janawaaz
-A multilingual civic issue reporting and tracking platform where citizens can report problems, upload photos and track complaints.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1006,4 +1004,341 @@ renderReports();
 </script>
 
 </body>
+<!-- JANAWAAZ COMMUNITY PULSE: 2nd commit feature -->
+<section id="community-pulse" class="pulse-section">
+  <div class="pulse-heading">
+    <div>
+      <p class="pulse-eyebrow">COMMUNITY POWER</p>
+      <h2>Community Pulse</h2>
+      <p>Support reported issues and spot recurring local problems.</p>
+    </div>
+    <span class="pulse-icon">📢</span>
+  </div>
+
+  <div class="pulse-stats">
+    <div class="pulse-stat">
+      <strong id="pulse-total">0</strong>
+      <span>Community reports</span>
+    </div>
+    <div class="pulse-stat">
+      <strong id="pulse-support">0</strong>
+      <span>Total support</span>
+    </div>
+  </div>
+
+  <form id="pulse-form" class="pulse-form">
+    <label for="pulse-area">Locality / Zone</label>
+    <input id="pulse-area" type="text"
+      placeholder="e.g. Ashi Nagar" required maxlength="80">
+
+    <label for="pulse-category">Issue category</label>
+    <select id="pulse-category" required>
+      <option value="">Choose an issue</option>
+      <option>Water leakage</option>
+      <option>Road damage / Pothole</option>
+      <option>Garbage</option>
+      <option>Streetlight</option>
+      <option>Drainage</option>
+      <option>Other</option>
+    </select>
+
+    <label for="pulse-description">Describe the problem</label>
+    <textarea id="pulse-description"
+      placeholder="What is happening in your area?"
+      required maxlength="300" rows="3"></textarea>
+
+    <button type="submit" class="pulse-submit">
+      + Add community report
+    </button>
+  </form>
+
+  <div class="pulse-list-heading">
+    <h3>Community issues</h3>
+    <input id="pulse-search" type="search"
+      placeholder="Search locality or issue..."
+      aria-label="Search community issues">
+  </div>
+
+  <div id="pulse-list" class="pulse-list"></div>
+  <p class="pulse-note">
+    Demo feature: reports are saved only in this browser.
+    They are not sent to municipal authorities.
+  </p>
+</section>
+
+<style>
+  .pulse-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid #dce5e1;
+    border-radius: 20px;
+    background: #fff;
+    color: #19352c;
+    font-family: inherit;
+  }
+
+  .pulse-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .pulse-eyebrow {
+    color: #21845f;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+
+  .pulse-heading h2 {
+    margin: 6px 0;
+    font-size: 28px;
+  }
+
+  .pulse-heading p {
+    color: #62736b;
+    margin: 8px 0;
+  }
+
+  .pulse-icon { font-size: 36px; }
+
+  .pulse-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 22px 0;
+  }
+
+  .pulse-stat {
+    background: #eff8f3;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pulse-stat strong {
+    font-size: 28px;
+    color: #16754f;
+  }
+
+  .pulse-stat span {
+    font-size: 13px;
+    color: #52665b;
+  }
+
+  .pulse-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  .pulse-form label {
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .pulse-form input,
+  .pulse-form select,
+  .pulse-form textarea,
+  .pulse-list-heading input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd8d1;
+    border-radius: 9px;
+    background: white;
+    color: #19352c;
+    font: inherit;
+  }
+
+  .pulse-submit {
+    margin-top: 8px;
+    padding: 13px;
+    border: 0;
+    border-radius: 10px;
+    background: #16754f;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .pulse-submit:hover { background: #105d3e; }
+
+  .pulse-list-heading {
+    display: grid;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .pulse-list-heading h3 { margin: 0; }
+
+  .pulse-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .pulse-card {
+    border: 1px solid #dce5e1;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .pulse-card h4 { margin: 0 0 8px; }
+
+  .pulse-card p {
+    color: #62736b;
+    overflow-wrap: anywhere;
+  }
+
+  .pulse-meta {
+    font-size: 13px;
+    color: #62736b;
+  }
+
+  .pulse-support-btn {
+    padding: 9px 13px;
+    border: 1px solid #16754f;
+    border-radius: 8px;
+    background: #eff8f3;
+    color: #126342;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .pulse-note {
+    color: #6b7771;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .pulse-section { padding: 16px; }
+    .pulse-heading h2 { font-size: 23px; }
+  }
+</style>
+
+<script>
+(function () {
+  const STORAGE_KEY = "janawaaz_community_pulse_v1";
+  const form = document.getElementById("pulse-form");
+  const list = document.getElementById("pulse-list");
+  const search = document.getElementById("pulse-search");
+
+  if (!form || !list || !search) return;
+
+  let reports = [];
+
+  try {
+    reports = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (!Array.isArray(reports)) reports = [];
+  } catch {
+    reports = [];
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+    } catch {
+      alert("Could not save data in this browser.");
+    }
+  }
+
+  function makeId() {
+    return "JP-" + Date.now().toString(36).toUpperCase();
+  }
+
+  function render() {
+    const query = search.value.trim().toLowerCase();
+
+    const filtered = reports.filter(report =>
+      (report.area + " " + report.category + " " +
+       report.description).toLowerCase().includes(query)
+    );
+
+    document.getElementById("pulse-total").textContent =
+      reports.length;
+
+    document.getElementById("pulse-support").textContent =
+      reports.reduce((sum, report) => sum + report.support, 0);
+
+    list.replaceChildren();
+
+    if (!filtered.length) {
+      const empty = document.createElement("p");
+      empty.textContent = reports.length
+        ? "No matching community issues found."
+        : "No community reports yet. Add the first one!";
+      list.appendChild(empty);
+      return;
+    }
+
+    filtered.slice().reverse().forEach(report => {
+      const card = document.createElement("article");
+      card.className = "pulse-card";
+
+      const title = document.createElement("h4");
+      title.textContent = report.category;
+
+      const area = document.createElement("div");
+      area.className = "pulse-meta";
+      area.textContent = report.area + " • " + report.id;
+
+      const description = document.createElement("p");
+      description.textContent = report.description;
+
+      const support = document.createElement("p");
+      support.className = "pulse-meta";
+      support.textContent = "👥 " + report.support +
+        " community support";
+
+      const button = document.createElement("button");
+      button.className = "pulse-support-btn";
+      button.type = "button";
+      button.textContent = "＋ Support this issue";
+
+      button.addEventListener("click", () => {
+        report.support += 1;
+        save();
+        render();
+      });
+
+      card.append(title, area, description, support, button);
+      list.appendChild(card);
+    });
+  }
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const area = document.getElementById("pulse-area").value.trim();
+    const category = document.getElementById("pulse-category").value;
+    const description =
+      document.getElementById("pulse-description").value.trim();
+
+    if (!area || !category || !description) return;
+
+    reports.push({
+      id: makeId(),
+      area,
+      category,
+      description,
+      support: 0,
+      createdAt: new Date().toISOString()
+    });
+
+    save();
+    form.reset();
+    render();
+  });
+
+  search.addEventListener("input", render);
+
+  render();
+})();
+</script>
 </html>
